@@ -6,7 +6,7 @@ NOTE: the game window freezes while calculating a move, so it will appear to go 
   
 Game rules can be found here: https://skudpaisho.com/site/games/vagabond-pai-sho/  
   
-![Preview of the ](preview_image.png?raw=true "Title")
+![Preview of the Pai Sho program](preview_image.png?raw=true "Preview image")
   
 The maximum branching factor of Vagabond Pai Sho is enormous: in some positions, almost 1500 moves are possible. So algorithms like Minimax are not feasible, because the game tree is too large to analyze completely; searching just 4 plies deep means 1500^4 = 5,062,500,000,000 (5 trillion) positions. This is the primary motivation for using MCTS.
   
