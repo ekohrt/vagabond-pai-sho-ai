@@ -16,7 +16,7 @@ import math
 import numpy as np
 from constants2 import LOTUS, BISON, WHEEL, BADGER, CHRYS, FIRELILY, DRAGON, EMPTY, BOUNDARY, WHITE_POOL_ROW
 from PaiShoEngine import startState, index, coord, getVal, Move
-import monteCarlo_vanila_AI
+import monteCarlo_vanilla_AI
 import monteCarlo_with_eval_AI
 from button import Button
 
@@ -458,9 +458,9 @@ def boardValAtSelectedPoint(sel_point, board):
          
 if __name__ == "__main__":
     # Profiling stuff
-    import cProfile as profile
-    profile.run('main()', sort='time')
-    # main()
+    # import cProfile as profile
+    # profile.run('main()', sort='time')
+    main()
     
     
     
