@@ -46,7 +46,7 @@ so don't be redundant and pass a copy of that board.
 class BoardState:
     __slots__ = ["board", "turnPlayer", "pieceLocations", "emptyIndices", 
                  "playerCanCapFlowers", "canCapNonFlowers", "bisonTerritories", 
-                 "protectedPieces", "fireLilyRadii", "trappedIndices", "cachedBisonMoves"]
+                 "protectedPieces", "fireLilyRadii", "trappedIndices"]
     
     def __init__(self, board, turnPlayer, oldState=None):
         self.board = np.copy(board)
@@ -297,6 +297,7 @@ class BoardState:
     *this reduces the branching factor from like 2000 to ~300
     """
     def getAllMoves_Limited(self):
+        if self.winner() != -1: return [] #no moves if game is over
         #flags - only look at one of each piece in pool (no duplicate placement moves)
         pool_badgermole = False
         pool_chrys = False
