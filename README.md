@@ -2,7 +2,9 @@
 A python game where you can play Vagabond Pai Sho against an AI.  
 The AI uses monte-carlo tree search (MCTS) with a basic evaluation function.  
   
-NOTE: the game window freezes while calculating a move, so it will appear to go unresponsive for the allotted time.
+NOTE: the game window freezes while calculating a move, so it will appear to go unresponsive for the allotted time.  
+  
+Game rules can be found here: https://skudpaisho.com/site/games/vagabond-pai-sho/  
   
 ![Preview of the ](preview_image.png?raw=true "Title")
   
