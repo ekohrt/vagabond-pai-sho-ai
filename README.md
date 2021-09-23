@@ -32,7 +32,7 @@ Some more optimizations were used to increase the quality of each simulation, so
 - stop the simulation early (6 moves deep is enough), instead of playing out to the end
 - Instead of backpropagating just a win or loss, backpropagate a simple board evaluation (like in chess). All pieces were given equal value except the Lotus. This idea was inspired by this paper: https://www.sciencedirect.com/science/article/pii/S0304397516302717.
   
-All in all, the AI can pump out ~8000 simulations in 30 seconds (on my machine). It plays sensibly, but far from perfectly.
+All in all, the AI can pump out ~8000 simulations in 30 seconds (on my machine). It plays sensibly, but far from perfectly. For instance, it doesn't trade pieces when it should, and it almost plays its lotus tile move 1.
   
 The UI for the game is run on the engine 'pygame'. It's not great but it works.
   
