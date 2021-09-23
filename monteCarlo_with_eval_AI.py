@@ -45,6 +45,10 @@ import time
 import random
 from constants2 import RED_TEAM
 
+#how deep into the game tree do you search? Recommended: 4-6
+SIMULATION_DEPTH_CUTOFF = 5 
+
+
 # =============================================================================
 # TREE
 # =============================================================================
@@ -235,7 +239,7 @@ class MonteCarlo:
     """
     Phase 3, Simulation: Play game to terminal state (randomly)
     """
-    def simulate_random(self, node):
+    def simulate_random(self, node, depth_cutoff=SIMULATION_DEPTH_CUTOFF):
         boardState = node.boardState
         winner = boardState.winner()
         moveCount = 0
@@ -247,7 +251,7 @@ class MonteCarlo:
             winner = boardState.winner()
             moveCount+=1
             #stop simulation if it goes on too long... like, why look 50 moves deep when humans only think like 5 deep?
-            if moveCount > 20: return 0
+            if moveCount > depth_cutoff: return 0
         print(moveCount)
         return winner
 
@@ -260,7 +264,7 @@ class MonteCarlo:
     
     @return winner is 1 if white wins, 2 if red, or 0 if no winner.
     """
-    def simulate_better(self, node, reverse_eval):
+    def simulate_better(self, node, reverse_eval, depth_cutoff=SIMULATION_DEPTH_CUTOFF):
         boardState = node.boardState
         winner = boardState.winner()
         count = 0
@@ -282,7 +286,7 @@ class MonteCarlo:
             
             #don't simulate past 10 moves... most games don't go past 30 moves total
             count+=1
-            if count > 6: 
+            if count > depth_cutoff: 
                 # return 0
                 break
         #return the evaluation score - but reverse the sign if red player is calculating

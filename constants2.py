@@ -67,29 +67,29 @@ ALL_BADGERMOLES = {WHITE_TEAM: (W_BADGER_1, W_BADGER_2), RED_TEAM: (R_BADGER_1, 
 
 #giving each piece a relative value, so you can roughly analyze a board (like in chess)
 PIECE_VALUES = {
-    W_LOTUS     : 50,
-    W_BISON_1   : 5,
-    W_BISON_2   : 5,
-    W_WHEEL_1   : 5,
-    W_WHEEL_2   : 5,
-    W_BADGER_1  : 5,
-    W_BADGER_2  : 5,
-    W_CHRYS_1   : 5,
-    W_CHRYS_2   : 5,
-    W_FIRELILY  : 5,
-    W_DRAGON    : 5,
+    W_LOTUS     : 30,
+    W_BISON_1   : 7,
+    W_BISON_2   : 7,
+    W_WHEEL_1   : 7,
+    W_WHEEL_2   : 7,
+    W_BADGER_1  : 7,
+    W_BADGER_2  : 7,
+    W_CHRYS_1   : 7,
+    W_CHRYS_2   : 7,
+    W_FIRELILY  : 7,
+    W_DRAGON    : 7,
     
-    R_LOTUS     : -50,
-    R_BISON_1   : -5,
-    R_BISON_2   : -5,
-    R_WHEEL_1   : -5,
-    R_WHEEL_2   : -5,
-    R_BADGER_1  : -5,
-    R_BADGER_2  : -5,
-    R_CHRYS_1   : -5,
-    R_CHRYS_2   : -5,
-    R_FIRELILY  : -5,
-    R_DRAGON    : -5
+    R_LOTUS     : -30,
+    R_BISON_1   : -7,
+    R_BISON_2   : -7,
+    R_WHEEL_1   : -7,
+    R_WHEEL_2   : -7,
+    R_BADGER_1  : -7,
+    R_BADGER_2  : -7,
+    R_CHRYS_1   : -7,
+    R_CHRYS_2   : -7,
+    R_FIRELILY  : -7,
+    R_DRAGON    : -7
 }
 
 #strings for each piece number
@@ -178,8 +178,9 @@ DIAGS = (UP_L, UP_R, DOWN_L, DOWN_R)
 
 #some predefined common spaces where the AI can place these pieces; helps reduce the branching factor by a lot.
 PREDEFINED_FIRELILY_SPACES = {229, 139, 144, 149, 59, 72, 80, 216, 208}
-PREDEFINED_LOTUS_SPACES = {258, 4, 6, 7, 135, 9, 10, 137, 12, 138, 139, 263, 144, 268, 20, 149, 150, 151, 276, 25, 153, 278, 279, 281, 30, 282, 284, 36, 169, 42, 170, 48, 52, 186, 59, 66, 68, 204, 84, 220, 222, 229, 102, 236, 240, 118, 119, 246, 252}
-PREDEFINED_BADGERMOLE_SPACES = {161, 143, 144, 145, 127}
+# PREDEFINED_LOTUS_SPACES = {258, 4, 6, 7, 135, 9, 10, 137, 12, 138, 139, 263, 144, 268, 20, 149, 150, 151, 276, 25, 153, 278, 279, 281, 30, 282, 284, 36, 169, 42, 170, 48, 52, 186, 59, 66, 68, 204, 84, 220, 222, 229, 102, 236, 240, 118, 119, 246, 252}
+PREDEFINED_LOTUS_SPACES = {258, 4, 6, 7, 134, 9, 10, 135, 12, 137, 138, 262, 144, 264, 268, 20, 276, 150, 151, 24, 25, 26, 153, 154, 278, 30, 279, 281, 282, 284, 36, 37, 168, 169, 42, 170, 263, 47, 48, 52, 53, 54, 186, 64, 65, 66, 68, 204, 84, 220, 222, 223, 224, 102, 234, 235, 236, 240, 241, 118, 119, 120, 246, 251, 252}
+PREDEFINED_BADGERMOLE_SPACES = {161, 143, 144, 145, 127} #TODO: might want some more/different ones - ai never uses these
 
 #indices at the edge of the board: useful for calculating wheel moves
 UP_L_EDGES = {4, 5, 6, 7, 8, 9, 10, 11, 12, 136, 20, 153, 36, 170, 52, 187, 68, 204, 85, 102, 119}
@@ -190,3 +191,55 @@ WHEEL_DIRECTIONS = [(UP_L, UP_L_EDGES), (UP_R, UP_R_EDGES), (DOWN_L, DOWN_L_EDGE
 
 
 
+
+
+
+
+#Testing / Debugging stuff
+
+"""
+returns a board as a string in nice columns
+"""
+def getBoardString(board):
+    s = ""
+    for row in range(BOARD_WIDTH+2):  #number of rows plus the two piece pools at the end
+        for col in range(BOARD_WIDTH):
+            idx = (row*BOARD_WIDTH) + col
+            boardVal = board[idx]
+            if idx in PREDEFINED_LOTUS_SPACES:
+                boardVal = "5"
+            if idx == 224:
+                boardVal = "$"
+            s += "{:^4}".format(str(boardVal)+",")
+        s += "\n"
+    return s
+
+temp_board = np.array([
+    -1, -1, -1, -1,  5,  0,  5,  5,  0,  5,  5,  0,  5, -1, -1, -1, -1, 
+    -1, -1, -1,  5,  0,  0,  0,  5,  5,  5,  0,  0,  0,  5, -1, -1, -1, 
+    -1, -1,  5,  5,  0,  0,  0,  0,  5,  0,  0,  0,  0,  5,  5, -1, -1, 
+    -1,  5,  5,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  5,  5, -1, 
+     5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5, 
+     5,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  5, 
+     0,  5,  5,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  5,  5,  0, 
+     5,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  5, 
+     5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5, 
+    -1,  5,  5,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  5,  5, -1, 
+    -1, -1,  5,  5,  0,  0,  0,  0,  5,  0,  0,  0,  0,  5,  5, -1, -1, 
+    -1, -1, -1,  5,  0,  0,  0,  5,  5,  5,  0,  0,  0,  5, -1, -1, -1, 
+    -1, -1, -1, -1,  5,  0,  5,  5,  0,  5,  5,  0,  5, -1, -1, -1, -1, 
+    150,120,140,130,151,121,141,131,160,170,-1, 110,-1, -1, -1, -1, -1, 
+    250,220,240,230,251,221,241,231,260,270,-1, 210,-1, -1, -1, -1, -1
+])
+
+indices = set()
+for idx, val in enumerate(temp_board):
+    if val == 5:
+        indices.add(idx)
+print(indices, len(indices))
+
+# print(getBoardString(EMPTY_BOARD))

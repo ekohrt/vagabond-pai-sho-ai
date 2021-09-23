@@ -16,7 +16,6 @@ import math
 import numpy as np
 from constants2 import LOTUS, BISON, WHEEL, BADGER, CHRYS, FIRELILY, DRAGON, EMPTY, BOUNDARY, WHITE_POOL_ROW
 from PaiShoEngine import startState, index, coord, getVal, Move
-import monteCarlo_vanilla_AI
 import monteCarlo_with_eval_AI
 from button import Button
 
@@ -126,7 +125,7 @@ def main():
             
             #pressing space does nothing for now, keeping this around for later though
             elif e.type == p.KEYDOWN and e.key == p.K_SPACE:
-                print("Space Key Pressed - Nothing happened, carry on.")
+                print("Space Key Pressed - Nothing happened ")
             
             #mouse click handlers
             elif e.type == p.MOUSEBUTTONDOWN:
