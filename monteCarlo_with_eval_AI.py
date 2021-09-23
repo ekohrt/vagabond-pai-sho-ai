@@ -38,7 +38,15 @@ References:
 """
 
 
-
+#TODO: how to prevent hanging pieces?
+#maybe get all opponent's capture moves, then get all re-take moves after that, 
+#and so on until there are no captures left, and then run minimax on this tree?
+#the branching factor of such a tree couldn't possibly be more than like 4, and 
+#the maximum theoretical depth (if every piece takes and retakes sequentially)
+#is 10. so, 4^10 = 1,048,576. But like even just looking 6 deep is suuuper useful
+#and 4^6 = 4,096 max, totally doable.
+#if the ai comes out ahead in material, then choose that move? 
+#otherwise, run montecarlo search? idk...
 
 import math
 import time
@@ -274,7 +282,7 @@ class MonteCarlo:
             
             #if there's a capture available, take it (for simulation purposes)
             captureMoves = [m for m in allMoves if m.isCapture]
-            if captureMoves:
+            if len(captureMoves) >0:
                 move = random.choice(captureMoves)
             #otherwise, just pick a random move
             else:
@@ -287,7 +295,6 @@ class MonteCarlo:
             #don't simulate past 10 moves... most games don't go past 30 moves total
             count+=1
             if count > depth_cutoff: 
-                # return 0
                 break
         #return the evaluation score - but reverse the sign if red player is calculating
         if reverse_eval:
